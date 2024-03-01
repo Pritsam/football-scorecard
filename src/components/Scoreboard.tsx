@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Game from "./Game";
 import UpdateScorePopup from "./UpdateScorePopup";
-// import { updateScore } from "../state/scoreboardSlice";
-// import { useDispatch } from "react-redux";
+import "../styles/Scoreboard.css";
 
 interface ScoreboardProps {
   games: {
@@ -17,8 +16,6 @@ interface ScoreboardProps {
 }
 
 const Scoreboard: React.FC<ScoreboardProps> = ({ games, onUpdateScore, onFinishGame }) => {
-
-  //const dispatch = useDispatch();
   const [selectedGameIndex, setSelectedGameIndex] = useState<number | null>(null);
 
   const openUpdateScorePopup = (index: number) => {
@@ -31,17 +28,16 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ games, onUpdateScore, onFinishG
 
   const handleUpdateScore = (homeScore: number, awayScore: number) => {
     if (selectedGameIndex !== null) {
-      //dispatch(updateScore({ selectedGameIndex, homeScore, awayScore }));
-      console.log(homeScore, awayScore);
       onUpdateScore(selectedGameIndex, homeScore, awayScore);
       closeUpdateScorePopup();
     }
   };
 
   return (
-    <div>
+    <div className="scoreboard-container">
+      <h2 className="scoreboard-title">Scoreboard</h2>
       {games.map((game, index) => (
-        <div key={index}>
+        <div key={index} className="game-container">
           <Game
             {...game}
             onUpdateScore={() => openUpdateScorePopup(index)}

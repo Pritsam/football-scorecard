@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Scoreboard from "./components/Scoreboard";
 import StartGameModal from "./components/StartGameModal";
 import GameSummary from "./components/GameSummary";
@@ -18,7 +18,6 @@ interface GameDetails {
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const games = useSelector((state: RootState) => state.scoreboard.games);
-  //const [games, setGames] = useState<GameDetails[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [sortedGames, setSortedGames] = useState<GameDetails[]>([]);
@@ -33,28 +32,18 @@ const App: React.FC = () => {
 
   const startGame = (homeTeam: string, awayTeam: string) => {
     dispatch(beginGame({ homeTeam, awayTeam }));
-    // setGames([
-    //   ...games,
-    //   { homeTeam, awayTeam, homeScore: 0, awayScore: 0, startTime: new Date() },
-    // ]);
     closeModal();
   };
 
   const updateScore = (index: number, homeScore: number, awayScore: number) => {
     dispatch(modifyScore({ index, homeScore, awayScore }));
-    // const updatedGames = [...games];
-    // updatedGames[index] = { ...updatedGames[index], homeScore, awayScore };
-    // setGames(updatedGames);
   };
 
   const finishGame = (index: number) => {
     dispatch(endGame(index));
-    // const updatedGames = [...games];
-    // updatedGames.splice(index, 1);
-    // setGames(updatedGames);
   };
 
-  const showSummary = () => {
+  const sortGames = useCallback(() => {
     const sortedGames = [...games].sort((a, b) => {
       const totalScoreA = a.homeScore + a.awayScore;
       const totalScoreB = b.homeScore + b.awayScore;
@@ -66,20 +55,19 @@ const App: React.FC = () => {
       }
     });
 
-    // return sortedGames.map((game, index) => (
-    //   <GameSummary
-    //     key={index}
-    //     homeTeam={game.homeTeam}
-    //     awayTeam={game.awayTeam}
-    //     homeScore={game.homeScore}
-    //     awayScore={game.awayScore}
-    //     // totalScore={game.homeScore + game.awayScore}
-    //     // startTime={game.startTime}
-    //   />
-    // ));
+    return sortedGames;
+  }, [games]);
+
+  const showSummary = () => {
+    const sortedGames = sortGames();
     setSortedGames(sortedGames);
     setIsSummaryOpen(!isSummaryOpen);
   };
+
+  useEffect(() => {
+    const sortedGames = sortGames();
+    setSortedGames(sortedGames);
+  }, [games, sortGames]);
 
   return (
     <div>
@@ -96,16 +84,21 @@ const App: React.FC = () => {
       />
       <button onClick={showSummary}>Show/Hide Summary</button>
       {isSummaryOpen &&
-        sortedGames.map((game, index) => (
-          <GameSummary
-            key={index}
-            homeTeam={game.homeTeam}
-            awayTeam={game.awayTeam}
-            homeScore={game.homeScore}
-            awayScore={game.awayScore}
-            // totalScore={game.homeScore + game.awayScore}
-            // startTime={game.startTime}
-          />
+        (games.length !== 0 ? (
+          <div className="game-summary-container">
+            <h2 className="game-summary-title">Summary</h2>
+            {sortedGames.map((game, index) => (
+              <GameSummary
+                key={index}
+                homeTeam={game.homeTeam}
+                awayTeam={game.awayTeam}
+                homeScore={game.homeScore}
+                awayScore={game.awayScore}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>No games available currently.</div>
         ))}
     </div>
   );

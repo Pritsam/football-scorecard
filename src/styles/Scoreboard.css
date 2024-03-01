@@ -1,0 +1,20 @@
+/* Scoreboard.css */
+
+.scoreboard-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .game-container {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .scoreboard-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  

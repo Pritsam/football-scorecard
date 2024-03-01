@@ -13,8 +13,6 @@ const UpdateScorePopup: React.FC<UpdateScorePopupProps> = ({
   onUpdateScore,
   onClose,
 }) => {
-  //const [homeScore, setHomeScore] = useSelector(0);
-  //const [awayScore, setAwayScore] = useSelector(0);
   const game = useSelector((state: RootState) => state.scoreboard.games[gameId]);
   const [homeScore, setHomeScore] = useState(game.homeScore);
   const [awayScore, setAwayScore] = useState(game.awayScore);

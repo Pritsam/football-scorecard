@@ -18,7 +18,7 @@ const StartGameModal: React.FC<StartGameModalProps> = ({
     onStartGame(homeTeam, awayTeam);
     setHomeTeam("");
     setAwayTeam("");
-    onClose();
+    //onClose();
   };
 
   return isOpen ? (

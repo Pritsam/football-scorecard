@@ -1,4 +1,3 @@
-// src/components/Game.tsx
 import React from "react";
 
 interface GameProps {
