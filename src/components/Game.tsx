@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ShowScore.css";
 
 interface GameProps {
   homeTeam: string;
@@ -9,11 +10,21 @@ interface GameProps {
   onFinishGame: () => void;
 }
 
-const Game: React.FC<GameProps> = ({ homeTeam, awayTeam, homeScore, awayScore, onUpdateScore, onFinishGame }) => {
+const Game: React.FC<GameProps> = ({
+  homeTeam,
+  awayTeam,
+  homeScore,
+  awayScore,
+  onUpdateScore,
+  onFinishGame,
+}) => {
   return (
     <div>
-      {homeTeam} {homeScore} - {awayScore} {awayTeam}
-      <button onClick={onUpdateScore}>Update Score</button>
+      <div className="display-score">
+        {homeTeam} {homeScore} - {awayScore} {awayTeam}
+      </div>
+
+      {<button onClick={onUpdateScore}>Update Score</button>}
       <button onClick={onFinishGame}>Finish Game</button>
     </div>
   );

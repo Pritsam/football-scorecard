@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Scoreboard from "./components/Scoreboard";
-import StartGameModal from "./components/StartGameModal";
+import StartGameModal from "./components/Modals/StartGameModal";
 import GameSummary from "./components/GameSummary";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./state/store";
@@ -76,7 +76,7 @@ const App: React.FC = () => {
         onUpdateScore={updateScore}
         onFinishGame={finishGame}
       />
-      <button onClick={openModal}>New Game</button>
+      {!isModalOpen && <button onClick={openModal}>Start New Game</button>}
       <StartGameModal
         isOpen={isModalOpen}
         onClose={closeModal}

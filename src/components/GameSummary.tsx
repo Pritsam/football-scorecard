@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/GameSummary.css";
+import "../styles/ShowScore.css"
 
 interface GameSummaryProps {
   homeTeam: string;
@@ -15,7 +16,7 @@ const GameSummary: React.FC<GameSummaryProps> = ({
   awayScore,
 }) => {
   return (
-    <div className="game-container">
+    <div className="game-container display-score">
       {homeTeam} {homeScore} - {awayTeam} {awayScore}
     </div>
   );

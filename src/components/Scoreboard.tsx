@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Game from "./Game";
-import UpdateScorePopup from "./UpdateScorePopup";
+import UpdateScorePopup from "./Modals/UpdateScoreModal";
 import "../styles/Scoreboard.css";
 
 interface ScoreboardProps {
@@ -17,6 +17,7 @@ interface ScoreboardProps {
 
 const Scoreboard: React.FC<ScoreboardProps> = ({ games, onUpdateScore, onFinishGame }) => {
   const [selectedGameIndex, setSelectedGameIndex] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openUpdateScorePopup = (index: number) => {
     setSelectedGameIndex(index);
@@ -46,6 +47,8 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ games, onUpdateScore, onFinishG
           {selectedGameIndex === index && (
             <UpdateScorePopup
               gameId={selectedGameIndex}
+              homeTeamName={game.homeTeam}
+              awayTeamName={game.awayTeam}
               onUpdateScore={handleUpdateScore}
               onClose={closeUpdateScorePopup}
             />
